@@ -37,35 +37,45 @@ namespace ImageSearch_db
 
         string imageName, imageAuthor;
 
-        void createImageHistogram_25(int colorAverage, int[] histogram_temp)
+        /// <summary>
+        /// Increments the array element corresponding to the pixel's Grayscale value.
+        /// </summary>
+        /// <param name="grayscaleValue">Grayscale value of the pixel.</param>
+        /// <param name="histogram_temp">Array of 25 numbers which represents histogram values to be incremented.</param>
+        void createImageHistogram_25(int grayscaleValue, int[] histogram_temp)
         {
-            if (colorAverage > 240) { Interlocked.Increment(ref histogram_temp[24]);}
-            else if (colorAverage > 230) { Interlocked.Increment(ref histogram_temp[23]); }
-            else if (colorAverage > 220) { Interlocked.Increment(ref histogram_temp[22]); }
-            else if (colorAverage > 210) { Interlocked.Increment(ref histogram_temp[21]); }
-            else if (colorAverage > 200) { Interlocked.Increment(ref histogram_temp[20]); }
-            else if (colorAverage > 190) { Interlocked.Increment(ref histogram_temp[19]); }
-            else if (colorAverage > 180) { Interlocked.Increment(ref histogram_temp[18]); }
-            else if (colorAverage > 170) { Interlocked.Increment(ref histogram_temp[17]); }
-            else if (colorAverage > 160) { Interlocked.Increment(ref histogram_temp[16]); }
-            else if (colorAverage > 150) { Interlocked.Increment(ref histogram_temp[15]); }
-            else if (colorAverage > 140) { Interlocked.Increment(ref histogram_temp[14]); }
-            else if (colorAverage > 130) { Interlocked.Increment(ref histogram_temp[13]); }
-            else if (colorAverage > 120) { Interlocked.Increment(ref histogram_temp[12]); }
-            else if (colorAverage > 110) { Interlocked.Increment(ref histogram_temp[11]); }
-            else if (colorAverage > 100) { Interlocked.Increment(ref histogram_temp[10]); }
-            else if (colorAverage > 90) { Interlocked.Increment(ref histogram_temp[9]); }
-            else if (colorAverage > 80) { Interlocked.Increment(ref histogram_temp[8]); }
-            else if (colorAverage > 70) { Interlocked.Increment(ref histogram_temp[7]); }
-            else if (colorAverage > 60) { Interlocked.Increment(ref histogram_temp[6]); }
-            else if (colorAverage > 50) { Interlocked.Increment(ref histogram_temp[5]); }
-            else if (colorAverage > 40) { Interlocked.Increment(ref histogram_temp[4]); }
-            else if (colorAverage > 30) { Interlocked.Increment(ref histogram_temp[3]); }
-            else if (colorAverage > 20) { Interlocked.Increment(ref histogram_temp[2]); }
-            else if (colorAverage > 10) { Interlocked.Increment(ref histogram_temp[1]); }
+            if (grayscaleValue > 240) { Interlocked.Increment(ref histogram_temp[24]);}
+            else if (grayscaleValue > 230) { Interlocked.Increment(ref histogram_temp[23]); }
+            else if (grayscaleValue > 220) { Interlocked.Increment(ref histogram_temp[22]); }
+            else if (grayscaleValue > 210) { Interlocked.Increment(ref histogram_temp[21]); }
+            else if (grayscaleValue > 200) { Interlocked.Increment(ref histogram_temp[20]); }
+            else if (grayscaleValue > 190) { Interlocked.Increment(ref histogram_temp[19]); }
+            else if (grayscaleValue > 180) { Interlocked.Increment(ref histogram_temp[18]); }
+            else if (grayscaleValue > 170) { Interlocked.Increment(ref histogram_temp[17]); }
+            else if (grayscaleValue > 160) { Interlocked.Increment(ref histogram_temp[16]); }
+            else if (grayscaleValue > 150) { Interlocked.Increment(ref histogram_temp[15]); }
+            else if (grayscaleValue > 140) { Interlocked.Increment(ref histogram_temp[14]); }
+            else if (grayscaleValue > 130) { Interlocked.Increment(ref histogram_temp[13]); }
+            else if (grayscaleValue > 120) { Interlocked.Increment(ref histogram_temp[12]); }
+            else if (grayscaleValue > 110) { Interlocked.Increment(ref histogram_temp[11]); }
+            else if (grayscaleValue > 100) { Interlocked.Increment(ref histogram_temp[10]); }
+            else if (grayscaleValue > 90) { Interlocked.Increment(ref histogram_temp[9]); }
+            else if (grayscaleValue > 80) { Interlocked.Increment(ref histogram_temp[8]); }
+            else if (grayscaleValue > 70) { Interlocked.Increment(ref histogram_temp[7]); }
+            else if (grayscaleValue > 60) { Interlocked.Increment(ref histogram_temp[6]); }
+            else if (grayscaleValue > 50) { Interlocked.Increment(ref histogram_temp[5]); }
+            else if (grayscaleValue > 40) { Interlocked.Increment(ref histogram_temp[4]); }
+            else if (grayscaleValue > 30) { Interlocked.Increment(ref histogram_temp[3]); }
+            else if (grayscaleValue > 20) { Interlocked.Increment(ref histogram_temp[2]); }
+            else if (grayscaleValue > 10) { Interlocked.Increment(ref histogram_temp[1]); }
             else Interlocked.Increment(ref histogram_temp[0]);
         }
 
+        /// <summary>
+        /// Converts user-inputted image using lockBits method.
+        /// </summary>
+        /// <param name="image">Input image bitmap.</param>
+        /// <param name="histogram">Array of 25 numbers which represents histogram values to be incremented.</param>
         private void convertImage_lockBits(Bitmap image, int[] histogram)
         {
             Bitmap bm = new Bitmap(image.Width, image.Height);
@@ -82,6 +92,11 @@ namespace ImageSearch_db
             image.UnlockBits(bmd);
         }
 
+        /// <summary>
+        /// Converts user-inputted image using lockBits and parallel-for method.
+        /// </summary>
+        /// <param name="image">Input image bitmap.</param>
+        /// <param name="histogram">Array of 25 numbers which represents histogram values to be incremented.</param>
         private void convertImage_parallelForLockBits(Bitmap image, int[] histogram)
         {
             Bitmap bm = new Bitmap(image.Width, image.Height);
@@ -96,6 +111,12 @@ namespace ImageSearch_db
             image.UnlockBits(bmd);
         }
 
+        /// <summary>
+        /// Convert user-inputted image using two for-loops.
+        /// </summary>
+        /// <param name="bmp">Input image bitmap.</param>
+        /// <param name="histogram">Array of 25 numbers which represents histogram values to be incremented.</param>
+    
         private void convertImage_standard(Bitmap bmp, int[] histogram)
         {
             bmpHeight = bmp.Height;
@@ -110,8 +131,12 @@ namespace ImageSearch_db
                 }
             }
         }
-
         Stopwatch test = new Stopwatch();
+        /// <summary>
+        /// Convers RGB pixel to grayscale pixel using the selected conversion algorithm.
+        /// </summary>
+        /// <param name="currentPixel">RGB pixel for conversion.</param>
+        /// <returns>Grayscale value of the pixer.</returns>
         private int rgbToGrayscale(Color currentPixel)
         {
             if (rb_RGBavg.Checked == true) return(currentPixel.R + currentPixel.G + currentPixel.B) / 3;
@@ -120,6 +145,13 @@ namespace ImageSearch_db
             else return Math.Max(currentPixel.R, Math.Max(currentPixel.G, currentPixel.B)) + Math.Min(currentPixel.R, Math.Min(currentPixel.G, currentPixel.B)) / 2;
         }
         float scale = 1;
+        /// <summary>
+        /// Compares two image histograms.
+        /// </summary>
+        /// <param name="descriptors_image1">Array of 25 numbers which represents histogram values of the first image.</param>
+        /// <param name="descriptors_image2">Array of 25 numbers which represents histogram values of the second image.</param>
+        /// <param name="descriptors_compare">Empty array of 25 numbers which represents histogram values where results will be stored.</param>
+        /// <returns>Returns value between 0 and 100 depending on the similarity of the histograms.</returns>
         private float compareHistograms(int[] descriptors_image1, int[] descriptors_image2, float[] descriptors_compare)
         {
             float matching = 0;
